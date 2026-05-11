@@ -44,6 +44,19 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    profileUpdateRequest: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    profileUpdateSuccess: (state, action) => {
+      state.loading = false;
+      state.userInfo = { ...state.userInfo, ...action.payload };
+      localStorage.setItem('userInfo', JSON.stringify(state.userInfo));
+    },
+    profileUpdateFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
   },
 });
 
@@ -55,6 +68,9 @@ export const {
   registerRequest,
   registerSuccess,
   registerFail,
+  profileUpdateRequest,
+  profileUpdateSuccess,
+  profileUpdateFail,
 } = authSlice.actions;
 
 export default authSlice.reducer;

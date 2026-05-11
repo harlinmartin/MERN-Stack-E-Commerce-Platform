@@ -6,6 +6,9 @@ import {
   registerRequest,
   registerSuccess,
   registerFail,
+  profileUpdateRequest,
+  profileUpdateSuccess,
+  profileUpdateFail,
 } from '../slices/authSlice';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
@@ -58,6 +61,35 @@ export const register = (name, email, password) => async (dispatch) => {
   } catch (error) {
     dispatch(
       registerFail(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      )
+    );
+  }
+};
+
+export const updateProfile = (user) => async (dispatch, getState) => {
+  try {
+    dispatch(profileUpdateRequest());
+
+    const {
+      auth: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`${API_URL}/users/profile`, user, config);
+
+    dispatch(profileUpdateSuccess(data));
+  } catch (error) {
+    dispatch(
+      profileUpdateFail(
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message
