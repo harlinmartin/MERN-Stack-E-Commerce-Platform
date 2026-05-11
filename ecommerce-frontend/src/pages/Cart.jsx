@@ -56,7 +56,7 @@ const Cart = () => {
                   <Link to={`/product/${item.product}`} className="text-lg font-bold text-slate-900 hover:text-indigo-600 transition-colors">
                     {item.name}
                   </Link>
-                  <p className="text-2xl font-black text-indigo-600">${item.price}</p>
+                  <p className="text-2xl font-black text-indigo-600">₹{item.price}</p>
                 </div>
 
                 <div className="flex items-center gap-6">
@@ -96,7 +96,7 @@ const Cart = () => {
                 <div className="flex justify-between">
                   <span>Subtotal</span>
                   <span className="font-bold text-slate-900">
-                    ${cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
+                    ₹{cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
                   </span>
                 </div>
                 <div className="flex justify-between">
@@ -108,7 +108,7 @@ const Cart = () => {
               <div className="pt-6 border-t border-slate-200 flex justify-between items-end">
                 <span className="text-lg font-medium">Total</span>
                 <span className="text-4xl font-black text-slate-900">
-                  ${cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
+                  ₹{cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}
                 </span>
               </div>
 

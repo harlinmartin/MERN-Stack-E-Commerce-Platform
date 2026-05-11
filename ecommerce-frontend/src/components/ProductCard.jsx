@@ -34,7 +34,7 @@ const ProductCard = ({ product }) => {
         
         <div className="flex items-center justify-between mt-auto">
           <span className="text-2xl font-black text-slate-900">
-            ${product.price}
+            ₹{product.price}
           </span>
           <button className="bg-slate-900 text-white p-3 rounded-2xl hover:bg-indigo-600 transition-colors shadow-lg shadow-slate-200 active:scale-95">
             <ShoppingCart className="w-5 h-5" />

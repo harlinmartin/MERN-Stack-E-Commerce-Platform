@@ -12,9 +12,9 @@ import Register from './pages/Register';
 import Cart from './pages/Cart';
 import Orders from './pages/Orders';
 import Contact from './pages/Contact';
+import Profile from './pages/Profile';
 
-// Placeholders for remaining profile features
-const Profile = () => <div className="min-h-[60vh] flex items-center justify-center text-3xl font-bold">User Profile</div>;
+
 
 function App() {
   return (

@@ -76,7 +76,7 @@ const Orders = () => {
 
                 <div className="text-right space-y-2 shrink-0">
                   <p className="text-sm text-slate-500">Total Amount</p>
-                  <p className="text-3xl font-black text-slate-900">${order.totalPrice.toFixed(2)}</p>
+                  <p className="text-3xl font-black text-slate-900">₹{order.totalPrice.toFixed(2)}</p>
                   <Link to={`/order/${order._id}`} className="flex items-center justify-end gap-2 text-indigo-600 font-bold group-hover:gap-3 transition-all">
                     View Details
                     <ChevronRight className="w-4 h-4" />
