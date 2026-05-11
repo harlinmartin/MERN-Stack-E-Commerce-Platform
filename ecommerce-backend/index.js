@@ -6,6 +6,8 @@ const connectDB = require('./config/dbConnection');
 const authRoutes = require('./routes/authenticationRoutes');
 const productRoutes = require('./routes/productRoutes');
 const userProfileRoutes = require('./routes/userProfileRoutes');
+const orderRoutes = require('./routes/orderRoutes');
+const analyticsRoutes = require('./routes/analyticsRoutes');
 const errorHandler = require('./middleware/errorHandler');
 
 dotenv.config();
@@ -23,6 +25,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/users', userProfileRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 app.get('/', (req, res) => {
     res.send('E-Commerce API is running...');
