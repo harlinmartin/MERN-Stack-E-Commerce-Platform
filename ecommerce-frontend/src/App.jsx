@@ -9,9 +9,10 @@ import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Cart from './pages/Cart';
+import Orders from './pages/Orders';
 
-// Placeholders for next phases
-const Cart = () => <div className="min-h-[60vh] flex items-center justify-center text-3xl font-bold">Shopping Cart</div>;
+// Placeholders for remaining profile features
 const Profile = () => <div className="min-h-[60vh] flex items-center justify-center text-3xl font-bold">User Profile</div>;
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             
             {/* Protected Routes */}
             <Route element={<ProtectedRoute />}>
+              <Route path="/orders" element={<Orders />} />
               <Route path="/profile" element={<Profile />} />
             </Route>
           </Routes>

@@ -47,6 +47,10 @@ const Navbar = () => {
 
           {userInfo ? (
             <div className="flex items-center gap-4">
+              <Link to="/orders" className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 font-medium transition-colors">
+                <ShoppingCart className="w-5 h-5" />
+                <span className="hidden sm:inline">Orders</span>
+              </Link>
               <Link to="/profile" className="flex items-center gap-2 text-slate-600 hover:text-indigo-600 font-medium transition-colors">
                 <User className="w-5 h-5" />
                 <span className="hidden sm:inline">{userInfo.name}</span>
