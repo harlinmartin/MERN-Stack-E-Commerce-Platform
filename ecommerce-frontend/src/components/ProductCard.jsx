@@ -1,8 +1,24 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Star, ShoppingCart } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { cartAddItem } from '../redux/slices/cartSlice';
+import { Star, ShoppingCart, Check } from 'lucide-react';
+import { useState } from 'react';
 
 const ProductCard = ({ product }) => {
+  const dispatch = useDispatch();
+  const [added, setAdded] = useState(false);
+
+  const addToCartHandler = () => {
+    dispatch(cartAddItem({
+      product: product._id,
+      name: product.name,
+      image: product.imageUrl,
+      price: product.price,
+      countInStock: product.stock,
+      qty: 1,
+    }));
+    setAdded(true);
+    setTimeout(() => setAdded(false), 2000);
+  };
   return (
     <div className="glass rounded-3xl overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
       <Link to={`/product/${product._id}`}>
@@ -36,8 +52,11 @@ const ProductCard = ({ product }) => {
           <span className="text-2xl font-black text-slate-900">
             ₹{product.price}
           </span>
-          <button className="bg-slate-900 text-white p-3 rounded-2xl hover:bg-indigo-600 transition-colors shadow-lg shadow-slate-200 active:scale-95">
-            <ShoppingCart className="w-5 h-5" />
+          <button 
+            onClick={addToCartHandler}
+            className={`${added ? 'bg-green-500' : 'bg-slate-900 hover:bg-indigo-600'} text-white p-3 rounded-2xl transition-all shadow-lg shadow-slate-200 active:scale-95 flex items-center justify-center`}
+          >
+            {added ? <Check className="w-5 h-5" /> : <ShoppingCart className="w-5 h-5" />}
           </button>
         </div>
       </div>

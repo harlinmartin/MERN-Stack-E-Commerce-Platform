@@ -2,20 +2,50 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { cartAddItem, cartRemoveItem } from '../redux/slices/cartSlice';
-import { Trash2, ShoppingBag, ArrowRight, Minus, Plus } from 'lucide-react';
+import { createOrder } from '../redux/thunks/orderThunks';
+import { Trash2, ShoppingBag, ArrowRight, Minus, Plus, Loader2 } from 'lucide-react';
 
 const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { cartItems } = useSelector((state) => state.cart);
+  const { userInfo } = useSelector((state) => state.auth);
+  const { loading: orderLoading } = useSelector((state) => state.order);
 
   const removeFromCartHandler = (id) => {
     dispatch(cartRemoveItem(id));
   };
 
-  const checkoutHandler = () => {
-    navigate('/login?redirect=/shipping');
+  const checkoutHandler = async () => {
+    if (!userInfo) {
+      navigate('/login?redirect=/cart');
+      return;
+    }
+
+    const orderData = {
+      orderItems: cartItems.map(item => ({
+        name: item.name,
+        qty: item.qty,
+        image: item.image,
+        price: item.price,
+        product: item.product,
+      })),
+      shippingAddress: {
+        address: '123 Main St',
+        city: 'Mumbai',
+        postalCode: '400001',
+        country: 'India',
+      },
+      paymentMethod: 'PayPal',
+      itemsPrice: cartItems.reduce((acc, item) => acc + item.price * item.qty, 0),
+      shippingPrice: 0,
+      taxPrice: 0,
+      totalPrice: cartItems.reduce((acc, item) => acc + item.price * item.qty, 0),
+    };
+
+    await dispatch(createOrder(orderData));
+    navigate('/orders');
   };
 
   const updateQtyHandler = (item, qty) => {
@@ -114,10 +144,17 @@ const Cart = () => {
 
               <button 
                 onClick={checkoutHandler}
-                className="w-full btn-primary !py-5 flex items-center justify-center gap-3 text-lg !rounded-3xl group"
+                disabled={cartItems.length === 0 || orderLoading}
+                className="w-full btn-primary !py-5 flex items-center justify-center gap-3 text-lg !rounded-3xl group shadow-xl shadow-indigo-100 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Checkout
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                {orderLoading ? (
+                  <Loader2 className="w-6 h-6 animate-spin" />
+                ) : (
+                  <>
+                    Checkout
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </>
+                )}
               </button>
             </div>
           </div>

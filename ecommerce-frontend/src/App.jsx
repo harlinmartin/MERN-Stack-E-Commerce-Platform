@@ -13,6 +13,7 @@ import Cart from './pages/Cart';
 import Orders from './pages/Orders';
 import Contact from './pages/Contact';
 import Profile from './pages/Profile';
+import OrderDetail from './pages/OrderDetail';
 
 
 
@@ -33,6 +34,7 @@ function App() {
             {/* Protected Routes */}
             <Route element={<ProtectedRoute />}>
               <Route path="/orders" element={<Orders />} />
+              <Route path="/order/:id" element={<OrderDetail />} />
               <Route path="/profile" element={<Profile />} />
             </Route>
           </Routes>
