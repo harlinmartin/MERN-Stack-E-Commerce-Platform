@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../redux/thunks/productThunks';
 import ProductCard from '../components/ProductCard';
-import { Search, SlidersHorizontal, Loader2, PackageX } from 'lucide-react';
+import { Search, SlidersHorizontal, Loader2, Package } from 'lucide-react';
 
 const Home = () => {
   const [keyword, setKeyword] = useState('');
@@ -85,7 +85,7 @@ const Home = () => {
         </div>
       ) : products.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-32 space-y-4 text-slate-400">
-          <PackageX className="w-16 h-16" />
+          <Package className="w-16 h-16" />
           <p className="text-xl font-semibold">No products found</p>
         </div>
       ) : (

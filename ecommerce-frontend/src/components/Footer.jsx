@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from 'lucide-react';
+import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -41,9 +42,9 @@ const Footer = () => {
         <div className="space-y-6">
           <h3 className="text-lg font-semibold text-white mb-6">Connect</h3>
           <div className="flex gap-4">
-            <Facebook className="w-5 h-5 cursor-pointer hover:text-white transition-colors" />
-            <Twitter className="w-5 h-5 cursor-pointer hover:text-white transition-colors" />
-            <Instagram className="w-5 h-5 cursor-pointer hover:text-white transition-colors" />
+            <FaFacebook className="w-5 h-5 cursor-pointer hover:text-white transition-colors" />
+            <FaTwitter className="w-5 h-5 cursor-pointer hover:text-white transition-colors" />
+            <FaInstagram className="w-5 h-5 cursor-pointer hover:text-white transition-colors" />
           </div>
           <div className="space-y-3 text-sm">
             <div className="flex items-center gap-3">
