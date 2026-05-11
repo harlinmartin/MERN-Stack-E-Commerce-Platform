@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Cart from './pages/Cart';
 import Orders from './pages/Orders';
+import Contact from './pages/Contact';
 
 // Placeholders for remaining profile features
 const Profile = () => <div className="min-h-[60vh] flex items-center justify-center text-3xl font-bold">User Profile</div>;
@@ -27,6 +28,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/contact" element={<Contact />} />
             
             {/* Protected Routes */}
             <Route element={<ProtectedRoute />}>
