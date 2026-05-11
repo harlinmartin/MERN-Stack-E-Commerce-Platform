@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { ShoppingBag, User, LogOut, Search, Menu, Package } from 'lucide-react';
 import { logout } from '../redux/slices/authSlice';
 
 const Navbar = () => {
+  const [searchTerm, setSearchTerm] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -16,6 +17,15 @@ const Navbar = () => {
     navigate('/login');
   };
 
+  const searchHandler = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/?keyword=${searchTerm}`);
+    } else {
+      navigate('/');
+    }
+  };
+
   return (
     <nav className="sticky top-0 z-50 glass px-6 py-4 mb-8">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -25,14 +35,18 @@ const Navbar = () => {
         </Link>
 
         {/* Search Bar - Hidden on mobile */}
-        <div className="hidden md:flex flex-1 max-w-md mx-8 relative group">
+        <form onSubmit={searchHandler} className="hidden md:flex flex-1 max-w-md mx-8 relative group">
           <input
             type="text"
             placeholder="Search products..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full bg-slate-100 border-none rounded-2xl py-2.5 pl-4 pr-10 focus:ring-2 focus:ring-indigo-500 transition-all group-hover:bg-slate-200"
           />
-          <Search className="absolute right-3 top-3 text-slate-400 w-5 h-5" />
-        </div>
+          <button type="submit" className="absolute right-3 top-3 text-slate-400 hover:text-indigo-600 transition-colors">
+            <Search className="w-5 h-5" />
+          </button>
+        </form>
 
         {/* Icons/Links */}
         <div className="flex items-center gap-6">

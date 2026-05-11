@@ -28,7 +28,7 @@ const OrderDetail = () => {
     </div>
   );
 
-  if (!order) return null;
+  if (!order || !order._id) return null;
 
   return (
     <div className="animate-fade-in space-y-10 pb-20 max-w-4xl mx-auto">

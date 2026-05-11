@@ -15,7 +15,7 @@ export const listProducts = (keyword = '', category = '', sort = '') => async (d
     dispatch(productListRequest());
 
     const { data } = await axios.get(
-      `${API_URL}/products?keyword=${keyword}&category=${category}&sort=${sort}`
+      `${API_URL}/products?keyword=${encodeURIComponent(keyword)}&category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}`
     );
 
     dispatch(productListSuccess(data.products));

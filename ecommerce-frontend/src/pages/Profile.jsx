@@ -2,13 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile } from '../redux/thunks/authThunks';
 import { listMyOrders } from '../redux/thunks/orderThunks';
-import { User, Mail, Shield, Calendar, Package, ArrowRight, Edit3, Save, X, Loader2 } from 'lucide-react';
+import { Mail, Shield, Calendar, Package, ArrowRight, Edit3, Save, X, Loader2, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [address, setAddress] = useState('');
+  const [city, setCity] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+  const [country, setCountry] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [message, setMessage] = useState(null);
@@ -21,6 +25,10 @@ const Profile = () => {
     if (userInfo) {
       setName(userInfo.name);
       setEmail(userInfo.email);
+      setAddress(userInfo.address || '');
+      setCity(userInfo.city || '');
+      setPostalCode(userInfo.postalCode || '');
+      setCountry(userInfo.country || '');
       dispatch(listMyOrders());
     }
   }, [userInfo, dispatch]);
@@ -30,7 +38,7 @@ const Profile = () => {
     if (password !== confirmPassword) {
       setMessage('Passwords do not match');
     } else {
-      dispatch(updateProfile({ name, email, password }));
+      dispatch(updateProfile({ name, email, password, address, city, postalCode, country }));
       setIsEditing(false);
       setMessage('Profile Updated Successfully!');
       setTimeout(() => setMessage(null), 3000);
@@ -88,6 +96,16 @@ const Profile = () => {
                 <p className="font-bold text-green-600">Verified Member</p>
               </div>
             </div>
+            
+            {userInfo.address && (
+              <div className="flex items-center gap-4 text-slate-600 border-t border-slate-100 pt-6">
+                <div className="p-3 bg-indigo-50 rounded-2xl"><MapPin className="w-5 h-5 text-indigo-600" /></div>
+                <div className="text-left">
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Saved Address</p>
+                  <p className="font-bold text-slate-900 text-sm">{userInfo.address}, {userInfo.city}</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -138,6 +156,46 @@ const Profile = () => {
                     className="w-full bg-slate-100 border-2 border-transparent rounded-2xl py-4 px-6 focus:bg-white focus:border-indigo-100 outline-none transition-all font-bold text-slate-900"
                   />
                 </div>
+                <div className="md:col-span-2 space-y-2">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Street Address</label>
+                  <input
+                    type="text"
+                    placeholder="123 Main St"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    className="w-full bg-slate-100 border-2 border-transparent rounded-2xl py-4 px-6 focus:bg-white focus:border-indigo-100 outline-none transition-all font-bold text-slate-900"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">City</label>
+                  <input
+                    type="text"
+                    placeholder="Mumbai"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    className="w-full bg-slate-100 border-2 border-transparent rounded-2xl py-4 px-6 focus:bg-white focus:border-indigo-100 outline-none transition-all font-bold text-slate-900"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Postal Code</label>
+                  <input
+                    type="text"
+                    placeholder="400001"
+                    value={postalCode}
+                    onChange={(e) => setPostalCode(e.target.value)}
+                    className="w-full bg-slate-100 border-2 border-transparent rounded-2xl py-4 px-6 focus:bg-white focus:border-indigo-100 outline-none transition-all font-bold text-slate-900"
+                  />
+                </div>
+                <div className="md:col-span-2 space-y-2">
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Country</label>
+                  <input
+                    type="text"
+                    placeholder="India"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    className="w-full bg-slate-100 border-2 border-transparent rounded-2xl py-4 px-6 focus:bg-white focus:border-indigo-100 outline-none transition-all font-bold text-slate-900"
+                  />
+                </div>
                 <div className="md:col-span-2 pt-4">
                   <button 
                     disabled={authLoading}
@@ -159,7 +217,7 @@ const Profile = () => {
                 </div>
                 <div className="glass p-10 rounded-[48px] bg-gradient-to-br from-slate-800 to-slate-900 text-white space-y-3 group hover:-translate-y-2 transition-all cursor-pointer shadow-2xl shadow-slate-300">
                   <div className="bg-white/10 w-16 h-16 rounded-3xl flex items-center justify-center"><Calendar className="w-8 h-8 text-white" /></div>
-                  <p className="text-6xl font-black">2024</p>
+                  <p className="text-6xl font-black">2026</p>
                   <p className="text-xs font-black opacity-80 uppercase tracking-[0.3em]">Joined Date</p>
                 </div>
               </div>

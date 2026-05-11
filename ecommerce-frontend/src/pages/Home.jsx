@@ -4,11 +4,20 @@ import { listProducts } from '../redux/thunks/productThunks';
 import ProductCard from '../components/ProductCard';
 import { Search, SlidersHorizontal, Loader2, Package, ArrowRight } from 'lucide-react';
 
+import { useSearchParams } from 'react-router-dom';
+
 const Home = () => {
-  const [keyword, setKeyword] = useState('');
+  const [searchParams] = useSearchParams();
+  const urlKeyword = searchParams.get('keyword') || '';
+  
+  const [keyword, setKeyword] = useState(urlKeyword);
   const [category, setCategory] = useState('');
   const [sort, setSort] = useState('-createdAt');
   const productRef = useRef(null);
+
+  useEffect(() => {
+    setKeyword(urlKeyword);
+  }, [urlKeyword]);
 
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.product);
@@ -36,7 +45,7 @@ const Home = () => {
         />
         <div className="relative z-20 max-w-2xl text-white space-y-8">
           <div className="inline-block bg-indigo-600/80 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-[0.2em]">
-            New Collection 2024
+            New Collection 2026
           </div>
           <h1 className="text-7xl font-black leading-[1.1]">Elevate Your <br /><span className="text-indigo-400">Lifestyle.</span></h1>
           <p className="text-indigo-50 text-xl max-w-md font-medium leading-relaxed">Discover the finest selection of premium products curated with precision and style.</p>

@@ -13,6 +13,10 @@ exports.updateUserProfile = async (req, res) => {
             if (req.body.password) {
                 user.password = req.body.password;
             }
+            user.address = req.body.address || user.address;
+            user.city = req.body.city || user.city;
+            user.postalCode = req.body.postalCode || user.postalCode;
+            user.country = req.body.country || user.country;
 
             const updatedUser = await user.save();
 
@@ -21,6 +25,10 @@ exports.updateUserProfile = async (req, res) => {
                 name: updatedUser.name,
                 email: updatedUser.email,
                 role: updatedUser.role,
+                address: updatedUser.address,
+                city: updatedUser.city,
+                postalCode: updatedUser.postalCode,
+                country: updatedUser.country,
             });
         } else {
             res.status(404).json({ message: 'User not found' });
