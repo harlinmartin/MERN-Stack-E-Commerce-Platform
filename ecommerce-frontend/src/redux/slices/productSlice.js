@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   products: [],
   product: {},
+  recommendations: [],
   loading: false,
   error: null,
 };
@@ -34,6 +35,17 @@ const productSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    recommendationRequest: (state) => {
+      state.loading = true;
+    },
+    recommendationSuccess: (state, action) => {
+      state.loading = false;
+      state.recommendations = action.payload;
+    },
+    recommendationFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
   },
 });
 
@@ -44,6 +56,9 @@ export const {
   productDetailsRequest,
   productDetailsSuccess,
   productDetailsFail,
+  recommendationRequest,
+  recommendationSuccess,
+  recommendationFail,
 } = productSlice.actions;
 
 export default productSlice.reducer;

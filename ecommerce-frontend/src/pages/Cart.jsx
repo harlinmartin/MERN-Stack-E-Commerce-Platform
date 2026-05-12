@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { cartAddItem, cartRemoveItem } from '../redux/slices/cartSlice';
 import { createOrder } from '../redux/thunks/orderThunks';
+import CartItem from '../components/CartItem';
 import { Trash2, ShoppingBag, ArrowRight, Minus, Plus, Loader2 } from 'lucide-react';
 
 const Cart = () => {
@@ -77,43 +78,12 @@ const Cart = () => {
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-6">
             {cartItems.map((item) => (
-              <div key={item.product} className="glass p-6 rounded-3xl flex flex-col sm:flex-row items-center gap-8 group">
-                <div className="w-32 h-32 bg-white rounded-2xl p-2 flex items-center justify-center overflow-hidden shrink-0">
-                  <img src={item.image} alt={item.name} className="max-w-full max-h-full object-contain" />
-                </div>
-                
-                <div className="flex-grow space-y-2">
-                  <Link to={`/product/${item.product}`} className="text-lg font-bold text-slate-900 hover:text-indigo-600 transition-colors">
-                    {item.name}
-                  </Link>
-                  <p className="text-2xl font-black text-indigo-600">₹{item.price}</p>
-                </div>
-
-                <div className="flex items-center gap-6">
-                  <div className="flex items-center bg-slate-50 p-1.5 rounded-xl border border-slate-200">
-                    <button 
-                      onClick={() => updateQtyHandler(item, Math.max(1, item.qty - 1))}
-                      className="p-1.5 hover:bg-white rounded-lg transition-colors"
-                    >
-                      <Minus className="w-4 h-4" />
-                    </button>
-                    <span className="w-10 text-center font-bold">{item.qty}</span>
-                    <button 
-                      onClick={() => updateQtyHandler(item, Math.min(item.countInStock, item.qty + 1))}
-                      className="p-1.5 hover:bg-white rounded-lg transition-colors"
-                    >
-                      <Plus className="w-4 h-4" />
-                    </button>
-                  </div>
-                  
-                  <button 
-                    onClick={() => removeFromCartHandler(item.product)}
-                    className="p-3 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-2xl transition-all"
-                  >
-                    <Trash2 className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
+              <CartItem 
+                key={item.product} 
+                item={item} 
+                updateQtyHandler={updateQtyHandler} 
+                removeFromCartHandler={removeFromCartHandler} 
+              />
             ))}
           </div>
 

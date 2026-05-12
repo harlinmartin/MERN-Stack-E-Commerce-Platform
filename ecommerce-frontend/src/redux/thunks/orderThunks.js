@@ -1,38 +1,23 @@
-import axios from 'axios';
+import axiosInstance from '../../api/axiosInstance';
 import {
   orderCreateRequest,
   orderCreateSuccess,
   orderCreateFail,
-  orderListMyRequest,
-  orderListMySuccess,
-  orderListMyFail,
   orderDetailsRequest,
   orderDetailsSuccess,
   orderDetailsFail,
+  orderListMyRequest,
+  orderListMySuccess,
+  orderListMyFail,
 } from '../slices/orderSlice';
-import { cartReset } from '../slices/cartSlice';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-
-export const createOrder = (order) => async (dispatch, getState) => {
+export const createOrder = (order) => async (dispatch) => {
   try {
     dispatch(orderCreateRequest());
 
-    const {
-      auth: { userInfo },
-    } = getState();
-
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-
-    const { data } = await axios.post(`${API_URL}/orders`, order, config);
+    const { data } = await axiosInstance.post('/orders', order);
 
     dispatch(orderCreateSuccess(data));
-    dispatch(cartReset());
   } catch (error) {
     dispatch(
       orderCreateFail(
@@ -44,26 +29,16 @@ export const createOrder = (order) => async (dispatch, getState) => {
   }
 };
 
-export const listMyOrders = () => async (dispatch, getState) => {
+export const getOrderDetails = (id) => async (dispatch) => {
   try {
-    dispatch(orderListMyRequest());
+    dispatch(orderDetailsRequest());
 
-    const {
-      auth: { userInfo },
-    } = getState();
+    const { data } = await axiosInstance.get(`/orders/${id}`);
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-
-    const { data } = await axios.get(`${API_URL}/orders/myorders`, config);
-
-    dispatch(orderListMySuccess(data));
+    dispatch(orderDetailsSuccess(data));
   } catch (error) {
     dispatch(
-      orderListMyFail(
+      orderDetailsFail(
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message
@@ -72,26 +47,16 @@ export const listMyOrders = () => async (dispatch, getState) => {
   }
 };
 
-export const getOrderDetails = (id) => async (dispatch, getState) => {
+export const listMyOrders = () => async (dispatch) => {
   try {
-    dispatch(orderDetailsRequest());
+    dispatch(orderListMyRequest());
 
-    const {
-      auth: { userInfo },
-    } = getState();
+    const { data } = await axiosInstance.get('/orders/myorders');
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-
-    const { data } = await axios.get(`${API_URL}/orders/${id}`, config);
-
-    dispatch(orderDetailsSuccess(data));
+    dispatch(orderListMySuccess(data));
   } catch (error) {
     dispatch(
-      orderDetailsFail(
+      orderListMyFail(
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message

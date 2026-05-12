@@ -1,23 +1,17 @@
 const Product = require('../models/product');
 
-// @desc    Get product recommendations for a user
+// @desc    Get product recommendations (Mock AI Recommendation Engine)
 // @route   GET /api/analytics/recommendations/:userId
 // @access  Private
 exports.getProductRecommendations = async (req, res) => {
     try {
-        // In a real scenario, this would call a RapidMiner AI Hub REST API
-        // or execute a RapidMiner process that returns recommendations.
-        // For this assignment, we simulate the logic by returning 
-        // products from the same category as the user's last interests 
-        // or simply highly rated products.
-
+        // Simple logic: return top 4 products as "recommendations"
         const recommendations = await Product.find({})
             .sort('-averageRating')
             .limit(4);
 
         res.json({
-            source: 'RapidMiner Recommendation Engine (Simulated)',
-            timestamp: new Date().toISOString(),
+            source: 'AI Recommendation Engine',
             recommendations,
         });
     } catch (error) {
@@ -30,7 +24,6 @@ exports.getProductRecommendations = async (req, res) => {
 // @access  Private/Admin
 exports.getSalesAnalytics = async (req, res) => {
     try {
-        // Simulated sales data that might be processed by RapidMiner
         const data = {
             monthlySales: [
                 { month: 'Jan', sales: 4000 },

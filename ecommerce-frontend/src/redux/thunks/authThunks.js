@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from '../../api/axiosInstance';
 import {
   loginRequest,
   loginSuccess,
@@ -11,23 +11,11 @@ import {
   profileUpdateFail,
 } from '../slices/authSlice';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch(loginRequest());
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    const { data } = await axios.post(
-      `${API_URL}/auth/login`,
-      { email, password },
-      config
-    );
+    const { data } = await axiosInstance.post('/auth/login', { email, password });
 
     dispatch(loginSuccess(data));
   } catch (error) {
@@ -45,17 +33,7 @@ export const register = (name, email, password) => async (dispatch) => {
   try {
     dispatch(registerRequest());
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    const { data } = await axios.post(
-      `${API_URL}/auth/register`,
-      { name, email, password },
-      config
-    );
+    const { data } = await axiosInstance.post('/auth/register', { name, email, password });
 
     dispatch(registerSuccess(data));
   } catch (error) {
@@ -69,22 +47,12 @@ export const register = (name, email, password) => async (dispatch) => {
   }
 };
 
-export const updateProfile = (user) => async (dispatch, getState) => {
+export const updateProfile = (user) => async (dispatch) => {
   try {
     dispatch(profileUpdateRequest());
 
-    const {
-      auth: { userInfo },
-    } = getState();
-
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-
-    const { data } = await axios.put(`${API_URL}/users/profile`, user, config);
+    // axiosInstance automatically adds the token via interceptor
+    const { data } = await axiosInstance.put('/users/profile', user);
 
     dispatch(profileUpdateSuccess(data));
   } catch (error) {

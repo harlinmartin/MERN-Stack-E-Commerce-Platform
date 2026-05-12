@@ -2,30 +2,26 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../redux/thunks/productThunks';
 import ProductCard from '../components/ProductCard';
-import { Search, SlidersHorizontal, Loader2, Package, ArrowRight } from 'lucide-react';
-
+import { SlidersHorizontal, Loader2, Package, ArrowRight } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 
 const Home = () => {
   const [searchParams] = useSearchParams();
   const urlKeyword = searchParams.get('keyword') || '';
   
-  const [keyword, setKeyword] = useState(urlKeyword);
   const [category, setCategory] = useState('');
   const [sort, setSort] = useState('-createdAt');
   const productRef = useRef(null);
-
-  useEffect(() => {
-    setKeyword(urlKeyword);
-  }, [urlKeyword]);
 
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.product);
   const { loading, error, products } = productList;
 
   useEffect(() => {
-    dispatch(listProducts(keyword, category, sort));
-  }, [dispatch, keyword, category, sort]);
+    // We fetch products based on category and sort, but showing all by default
+    // and only filtering by keyword if the user specifically searches from the navbar
+    dispatch(listProducts(urlKeyword, category, sort));
+  }, [dispatch, urlKeyword, category, sort]);
 
   const scrollToProducts = () => {
     productRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -62,14 +58,15 @@ const Home = () => {
       <div ref={productRef} className="space-y-12">
         {/* Filter Bar */}
         <div className="flex flex-col lg:flex-row gap-6 items-center justify-between glass p-8 rounded-[40px] shadow-sm">
-          <div className="relative w-full lg:max-w-md group">
-            <Search className="absolute left-5 top-4 text-slate-400 w-5 h-5 group-focus-within:text-indigo-500 transition-colors" />
-            <input
-              type="text"
-              placeholder="Search our exclusive collection..."
-              className="w-full bg-slate-50 border-2 border-transparent rounded-[24px] py-4 pl-14 pr-6 focus:bg-white focus:border-indigo-100 focus:ring-4 focus:ring-indigo-500/5 outline-none transition-all font-medium"
-              onChange={(e) => setKeyword(e.target.value)}
-            />
+          <div className="flex items-center gap-4">
+             <h2 className="text-2xl font-black text-slate-900">
+               {urlKeyword ? 'Search Results' : 'Our Catalog'}
+             </h2>
+             {urlKeyword && (
+               <span className="bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest">
+                 "{urlKeyword}"
+               </span>
+             )}
           </div>
 
           <div className="flex flex-wrap items-center gap-4 w-full lg:w-auto">

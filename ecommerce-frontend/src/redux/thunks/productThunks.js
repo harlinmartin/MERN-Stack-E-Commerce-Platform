@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from '../../api/axiosInstance';
 import {
   productListRequest,
   productListSuccess,
@@ -6,16 +6,17 @@ import {
   productDetailsRequest,
   productDetailsSuccess,
   productDetailsFail,
+  recommendationRequest,
+  recommendationSuccess,
+  recommendationFail,
 } from '../slices/productSlice';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 export const listProducts = (keyword = '', category = '', sort = '') => async (dispatch) => {
   try {
     dispatch(productListRequest());
 
-    const { data } = await axios.get(
-      `${API_URL}/products?keyword=${encodeURIComponent(keyword)}&category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}`
+    const { data } = await axiosInstance.get(
+      `/products?keyword=${encodeURIComponent(keyword)}&category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}`
     );
 
     dispatch(productListSuccess(data.products));
@@ -34,12 +35,30 @@ export const listProductDetails = (id) => async (dispatch) => {
   try {
     dispatch(productDetailsRequest());
 
-    const { data } = await axios.get(`${API_URL}/products/${id}`);
+    const { data } = await axiosInstance.get(`/products/${id}`);
 
     dispatch(productDetailsSuccess(data));
   } catch (error) {
     dispatch(
       productDetailsFail(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      )
+    );
+  }
+};
+
+export const listRecommendations = () => async (dispatch) => {
+  try {
+    dispatch(recommendationRequest());
+
+    const { data } = await axiosInstance.get('/analytics/recommendations/my-recommendations');
+
+    dispatch(recommendationSuccess(data.recommendations));
+  } catch (error) {
+    dispatch(
+      recommendationFail(
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message

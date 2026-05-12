@@ -103,6 +103,51 @@ const products = [
     price: 1899,
     stock: 12,
     averageRating: 4.6,
+  },
+  {
+    name: 'Denim Trucker Jacket',
+    imageUrl: 'https://images.unsplash.com/photo-1576905300580-693b2699c78d?auto=format&fit=crop&q=80&w=800',
+    description: 'Rugged denim jacket with a vintage wash, perfect for layering.',
+    category: 'Clothing',
+    price: 4599,
+    stock: 22,
+    averageRating: 4.7,
+  },
+  {
+    name: 'Wireless Charging Pad',
+    imageUrl: 'https://images.unsplash.com/photo-1622445275463-afa2ab738c34?auto=format&fit=crop&q=80&w=800',
+    description: 'Sleek 15W fast wireless charger for all your Qi-enabled devices.',
+    category: 'Accessories',
+    price: 2999,
+    stock: 40,
+    averageRating: 4.5,
+  },
+  {
+    name: 'Premium Yoga Mat',
+    imageUrl: 'https://images.unsplash.com/photo-1592432678016-e910b452f9a2?auto=format&fit=crop&q=80&w=800',
+    description: 'Eco-friendly, non-slip yoga mat with extra cushioning for maximum comfort.',
+    category: 'Home & Living',
+    price: 3299,
+    stock: 30,
+    averageRating: 4.8,
+  },
+  {
+    name: 'Hydrating Face Serum',
+    imageUrl: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=800',
+    description: 'Advanced hydration formula with hyaluronic acid for silky smooth skin.',
+    category: 'Beauty',
+    price: 2499,
+    stock: 35,
+    averageRating: 4.9,
+  },
+  {
+    name: 'Mechanical Gaming Keyboard',
+    imageUrl: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&q=80&w=800',
+    description: 'RGB backlit mechanical keyboard with tactile blue switches.',
+    category: 'Electronics',
+    price: 6999,
+    stock: 18,
+    averageRating: 4.8,
   }
 ];
 
@@ -113,7 +158,7 @@ const seedData = async () => {
     await Product.deleteMany();
     await Product.insertMany(products);
 
-    console.log('Data Seeded Successfully with FINAL Verified Images!');
+    console.log('Data Seeded Successfully with 16 PREMIUM Products!');
     process.exit();
   } catch (error) {
     console.error(`Error: ${error.message}`);
