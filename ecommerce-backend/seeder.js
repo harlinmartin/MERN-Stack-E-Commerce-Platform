@@ -79,7 +79,7 @@ const products = [
   },
   {
     name: 'Designer Sunglasses',
-    imageUrl: 'https://images.unsplash.com/photo-1511499767390-a73923f61dd0?auto=format&fit=crop&q=80&w=800',
+    imageUrl: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&q=80&w=800',
     description: 'Classic aviator style with polarized lenses for ultimate protection and style.',
     category: 'Accessories',
     price: 7999,
@@ -106,7 +106,7 @@ const products = [
   },
   {
     name: 'Denim Trucker Jacket',
-    imageUrl: 'https://images.unsplash.com/photo-1576905300580-693b2699c78d?auto=format&fit=crop&q=80&w=800',
+    imageUrl: 'https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?auto=format&fit=crop&q=80&w=800',
     description: 'Rugged denim jacket with a vintage wash, perfect for layering.',
     category: 'Clothing',
     price: 4599,
