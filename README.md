@@ -1,5 +1,7 @@
 # EliteCommerce - Full Stack MERN E-Commerce Platform
 
+### Live Link: https://mern-stack-e-commerce-platform.vercel.app/
+
 A premium, fully integrated E-Commerce application built with the MERN stack (MongoDB, Express, React, Node.js).
 
 ## 🚀 Features
